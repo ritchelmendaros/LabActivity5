@@ -19,31 +19,41 @@ public class LeapYearGUI extends JFrame {
     }
 
     public void checkyear() {
-        double year = Double.parseDouble(tfYear.getText());
-        boolean leap = false;
+        try {
+            if(tfYear.getText() == " ") {
+                throw new IllegalArgumentException("Empty String!");
+            }
+            double year = Double.parseDouble(tfYear.getText());
+            boolean leap = false;
 
-        if (year % 4 == 0) {
-            if (year % 100 == 0) {
-                if (year % 400 == 0) {
+            if(year < 0) {
+                throw new IllegalArgumentException("Input is invalid!");
+            }
+
+            if (year % 4 == 0) {
+                if (year % 100 == 0) {
+                    if (year % 400 == 0) {
+                        leap = true;
+                    } else {
+                        leap = false;
+                    }
+                } else {
                     leap = true;
                 }
-                else {
-                    leap = false;
-                }
+            } else {
+                leap = false;
             }
-            else {
-                leap = true;
-            }
-        }
-        else {
-            leap = false;
-        }
 
-        if (leap) {
-            JOptionPane.showMessageDialog(panel1, "Leap Year");
+            if (leap) {
+                JOptionPane.showMessageDialog(panel1, "Leap Year");
+            } else {
+                JOptionPane.showMessageDialog(panel1, "Not a Leap Year");
+            }
+            tfYear.setText("");
         }
-        else {
-            JOptionPane.showMessageDialog(panel1, "Not a Leap Year");
+        catch(IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            tfYear.setText("");
         }
     }
     public static void main(String[] args) {
